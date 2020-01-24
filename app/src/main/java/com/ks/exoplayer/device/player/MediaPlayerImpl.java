@@ -15,6 +15,7 @@ import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.source.ProgressiveMediaSource;
 import com.google.android.exoplayer2.trackselection.DefaultTrackSelector;
+import com.google.android.exoplayer2.trackselection.TrackSelector;
 import com.google.android.exoplayer2.upstream.DataSource;
 import com.google.android.exoplayer2.upstream.DefaultDataSourceFactory;
 import com.google.android.exoplayer2.upstream.DefaultHttpDataSourceFactory;
@@ -50,31 +51,7 @@ public class MediaPlayerImpl implements MediaPlayer {
     }
 
 
-    private void initializePlayer(){
 
-
-        mediaSession = new  MediaSessionCompat(context, TAG);
-        mediaSession.setFlags(
-                MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
-                MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS
-        );
-        mediaSession.setMediaButtonReceiver(null);
-
-        stateBuilder = new PlaybackStateCompat.Builder()
-                .setActions(
-                        PlaybackStateCompat.ACTION_PLAY |
-                        PlaybackStateCompat.ACTION_PAUSE |
-                        PlaybackStateCompat.ACTION_PLAY_PAUSE |
-                        PlaybackStateCompat.ACTION_FAST_FORWARD |
-                        PlaybackStateCompat.ACTION_REWIND
-                );
-
-        mediaSession.setPlaybackState(stateBuilder.build());
-
-        mediaSession.setCallback(new SessionCallback());
-
-        mediaSession.setActive(true);
-    }
 
     private  class SessionCallback extends MediaSessionCompat.Callback {
 
@@ -98,7 +75,29 @@ public class MediaPlayerImpl implements MediaPlayer {
     }
 
 
-    private void initializeMediaSession(){}
+    private void initializeMediaSession(){
+        mediaSession = new  MediaSessionCompat(context, TAG);
+        mediaSession.setFlags(
+                MediaSessionCompat.FLAG_HANDLES_MEDIA_BUTTONS |
+                        MediaSessionCompat.FLAG_HANDLES_TRANSPORT_CONTROLS
+        );
+        mediaSession.setMediaButtonReceiver(null);
+
+        stateBuilder = new PlaybackStateCompat.Builder()
+                .setActions(
+                        PlaybackStateCompat.ACTION_PLAY |
+                                PlaybackStateCompat.ACTION_PAUSE |
+                                PlaybackStateCompat.ACTION_PLAY_PAUSE |
+                                PlaybackStateCompat.ACTION_FAST_FORWARD |
+                                PlaybackStateCompat.ACTION_REWIND
+                );
+
+        mediaSession.setPlaybackState(stateBuilder.build());
+
+        mediaSession.setCallback(new SessionCallback());
+
+        mediaSession.setActive(true);
+    }
 
     public void releasePlayer(){
         exoPlayer.stop();

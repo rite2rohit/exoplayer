@@ -1,8 +1,9 @@
 package com.ks.exoplayer.ata.network.model;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class ApiResponse {
+public class ApiResponse implements Serializable {
 
     private String updatedAt;
     private List<ApiVideo>resources;
