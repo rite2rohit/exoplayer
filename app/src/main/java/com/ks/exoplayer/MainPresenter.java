@@ -2,6 +2,7 @@ package com.ks.exoplayer;
 
 import android.app.Activity;
 import android.content.Intent;
+import android.util.Log;
 
 import androidx.core.util.Consumer;
 
@@ -29,6 +30,9 @@ public class MainPresenter implements MainContract.Presenter {
 
     @Override
     public void fetchSampleVideos() {
+
+        Log.d("MainPresenter", "fetchSampleVideos: ");
+
       disposables.add(
                 VideosService.fetchVideos()
                         .subscribeOn(Schedulers.io())
@@ -53,10 +57,12 @@ public class MainPresenter implements MainContract.Presenter {
     }
 
     private  void    onVideosFetchedSuccessfully(ApiResponse videoData) {
+        Log.d("MainPresenter", "onVideosFetchedSuccessfully: "+videoData);
        view.get().renderVideos(videoData.getResources());
     }
 
     private void  onVideosFetchError( Throwable throwable) {
+        Log.d("MainPresenter", "onVideosFetchError: "+throwable.getMessage());
         view.get().showErrorMessage();
     }
 }

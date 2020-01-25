@@ -5,6 +5,8 @@ import android.content.Context;
 import android.net.Uri;
 import android.support.v4.media.session.MediaSessionCompat;
 import android.support.v4.media.session.PlaybackStateCompat;
+import android.util.Log;
+
 import com.google.android.exoplayer2.DefaultLoadControl;
 import com.google.android.exoplayer2.DefaultRenderersFactory;
 import com.google.android.exoplayer2.ExoPlayer;
@@ -33,7 +35,7 @@ public class MediaPlayerImpl implements MediaPlayer {
 
 
    public void play(String url) {
-
+       Log.d(TAG, "play: "+url);
        // Create a data source factory.
        DataSource.Factory dataSourceFactory =
                new DefaultHttpDataSourceFactory(Util.getUserAgent(context, context.getString(R.string.app_name)));
@@ -41,6 +43,7 @@ public class MediaPlayerImpl implements MediaPlayer {
        MediaSource mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
                .createMediaSource(Uri.parse(url));
         exoPlayer.setPlayWhenReady(true);
+       Log.d(TAG, "playAfterReady: "+url);
     }
 
     public ExoPlayer getPlayerImpl( Context context){

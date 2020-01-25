@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import com.ks.exoplayer.ata.network.model.ApiVideo;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.TimeUnit;
 
@@ -21,7 +22,7 @@ import io.reactivex.subjects.Subject;
 public class MainAdapter extends RecyclerView.Adapter<MainAdapter.VideoViewHolder> {
     private long CLICK_THROTTLE_WINDOW_MILLIS = 300L;
     private Subject<ApiVideo> onVideoClickSubject = BehaviorSubject.create();
-    private List<ApiVideo> videos;
+    private List<ApiVideo> videos=new ArrayList<>();
     @Override
    public  VideoViewHolder   onCreateViewHolder(ViewGroup parent, int viewType) {
        View  itemView = LayoutInflater.from(parent.getContext())

@@ -5,6 +5,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ProgressBar;
 import android.widget.TextView;
@@ -21,10 +22,14 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private MainContract.Presenter presenter;
     private MainAdapter videosAdapter;
 
+    private  final String TAG="MainActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        Log.d(TAG, "onCreate: ");
+        init();
     }
     @Override
     public void renderVideos(List<ApiVideo> videos){
@@ -36,10 +41,12 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
 
     @Override
     public void showErrorMessage(){
+        hideLoadingIndicator();
+        showEmptyView();
 
     }
 @Override
- public void   onDestroy() {
+    protected void   onDestroy() {
         super.onDestroy();
         presenter.deactivate();
     }
@@ -59,9 +66,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
     private void initializeRecyclerView() {
         videosList.setLayoutManager(new  LinearLayoutManager(this));
         videosList.setHasFixedSize(true);
-
         videosAdapter =new  MainAdapter();
-       videosAdapter.onItemClick().subscribe(this::onVideoItemClick);
+        videosAdapter.onItemClick().subscribe(this::onVideoItemClick);
         videosList.setAdapter(videosAdapter);
     }
 
@@ -75,6 +81,8 @@ public class MainActivity extends AppCompatActivity implements MainContract.View
                     .append("/v").append(video.getVersion())
                     .append("/").append(video.getPublicId())
                     .append(".").append(video.getFormat());
+
+        Log.d(TAG, "createVideoUrl: "+url.toString());
         return url.toString();
 
     }
