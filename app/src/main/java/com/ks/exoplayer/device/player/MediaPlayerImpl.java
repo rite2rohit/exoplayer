@@ -42,6 +42,7 @@ public class MediaPlayerImpl implements MediaPlayer {
 //          //Create a progressive media source pointing to a stream uri.
        MediaSource mediaSource = new ProgressiveMediaSource.Factory(dataSourceFactory)
                .createMediaSource(Uri.parse(url));
+       exoPlayer.prepare(mediaSource);
         exoPlayer.setPlayWhenReady(true);
        Log.d(TAG, "playAfterReady: "+url);
     }
